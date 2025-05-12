@@ -1,1 +1,501 @@
-ABHINAV
+Problem number-23
+Problemname-merge k sorted lists
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        vector<int> v;
+
+        // Collect all values from linked lists
+        for(ListNode* temp : lists) {
+            while(temp != NULL) {
+                v.push_back(temp->val);
+                temp = temp->next;
+            }
+        }
+
+        // If no elements, return NULL
+        if(v.empty()) {
+            return NULL;
+        }
+
+        // Sort collected values
+        sort(v.begin(), v.end());
+
+        // Create new sorted linked list
+        ListNode* head = new ListNode(v[0]);
+        ListNode* ptr = head;
+
+        for(int i = 1; i < v.size(); i++) {
+            ListNode* nn = new ListNode(v[i]);
+            ptr->next = nn;
+            ptr = ptr->next;
+        }
+        
+        return head;
+    }
+};
+
+
+problem no-215 
+problem name -Kth Largest Element in an Array
+
+
+import heapq
+
+class Solution(object):
+    def findKthLargest(self, nums, k):
+        min_heap = []
+        for num in nums:
+            heapq.heappush(min_heap, num)
+            if len(min_heap) > k:
+                heapq.heappop(min_heap)
+        return min_heap[0]
+
+
+
+{session 2}
+
+problem no-3
+problem name -sliding windows maximum
+
+class Solution {
+public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        vector<int> res;
+        deque<int> deque;
+
+        for (int i = 0; i < nums.size(); i++) {
+            int num = nums[i];
+
+            while (!deque.empty() && deque.back() < num) {
+                deque.pop_back();
+            }
+            deque.push_back(num);
+
+            if (i >= k && nums[i - k] == deque.front()) {
+                deque.pop_front();
+            }
+
+            if (i >= k - 1) {
+                res.push_back(deque.front());
+            }
+        }
+
+        return res;        
+    }
+};
+
+problem no-347
+problem name -Top K Frequent Elements
+
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        d=[(v,n) for n,v in Counter(nums).items()]
+        d.sort(reverse=True)
+
+        return [i[1] for i in d[:k]]
+
+
+
+problem no-373
+problem name -Find K Pairs with Smallest Sums
+
+import heapq
+class Solution:
+    def kSmallestPairs(self, nums1: List[int], nums2: List[int], k: int) -> List[List[int]]:
+        if not nums1 or not nums2 or k <= 0:
+            return []
+        
+        m, n = len(nums1), len(nums2)
+        heap = []
+        result = []
+        
+        for i in range(min(k, m)):
+            heapq.heappush(heap, (nums1[i] + nums2[0], i, 0))
+        
+        while heap and len(result) < k:
+            total, i, j = heapq.heappop(heap)
+            result.append([nums1[i], nums2[j]])
+            if j + 1 < n:
+                heapq.heappush(heap, (nums1[i] + nums2[j + 1], i, j + 1))
+        
+        return result         
+
+
+problem no-621
+problem name -task scheduler
+
+class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {
+        unordered_map<char, int> freq;
+
+        for(char i : tasks){
+            freq[i]++;
+        }
+
+        priority_queue<int>maxHeap;
+
+        for(auto i : freq){
+            maxHeap.push(i.second);
+        }
+
+        queue<pair<int, int>> lq;
+
+        int t = 0;
+
+        while(!maxHeap.empty() || !lq.empty()){
+            t++;
+
+            if( !lq.empty() && lq.front().second == t){
+                maxHeap.push(lq.front().first);
+                lq.pop();
+            }
+
+            if(!maxHeap.empty()){
+                int count = maxHeap.top();
+                maxHeap.pop();
+                count--;
+                if(count > 0){
+                    lq.push({count, t+n+1});
+                }
+            }
+        } 
+
+        return t;
+        
+    }
+};
+
+
+
+problem no-862
+problem name -Shortest Subarray with Sum at Least K
+
+
+class Solution {
+public:
+    int shortestSubarray(vector<int>& nums, int k) {
+        int n = nums.size();
+        vector<long> prefix(n + 1, 0);
+        
+        // Step 1: Compute prefix sums
+        for (int i = 0; i < n; ++i) {
+            prefix[i + 1] = prefix[i] + nums[i];
+        }
+
+        deque<int> dq; 
+        int minLength = INT_MAX;
+
+        for (int i = 0; i <= n; ++i) {
+            /
+            while (!dq.empty() && prefix[i] - prefix[dq.front()] >= k) {
+                minLength = min(minLength, i - dq.front());
+                dq.pop_front();
+            }
+
+            
+            while (!dq.empty() && prefix[i] <= prefix[dq.back()]) {
+                dq.pop_back();
+            }
+
+           
+            dq.push_back(i);
+        }
+
+        return minLength == INT_MAX ? -1 : minLength;
+    }
+};
+
+
+
+
+problem no-814 
+problem name -binary tree pruning
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    bool solve(TreeNode* &root) {
+        if (!root) return true;
+        bool left = solve(root->left);
+        bool right = solve(root->right);
+        if (left) {
+            root->left = NULL;
+        }
+        if (right) {
+            root->right = NULL;
+        }
+        return (root->val == 0 && !root->left && !root->right);
+    }
+    TreeNode* pruneTree(TreeNode* root) {
+        if (solve(root)) {
+            return NULL;
+        }
+        return root;
+    }
+};
+
+
+
+problem no-543
+problem name - Diameter of Binary Tree
+
+class Solution(object):
+    def diameterOfBinaryTree(self, root):
+        self.max_diameter = 0
+
+        def depth(node):
+            if not node:
+                return 0
+            left_depth = depth(node.left)
+            right_depth = depth(node.right)
+            self.max_diameter = max(self.max_diameter, left_depth + right_depth)
+            return max(left_depth, right_depth) + 1
+
+        depth(root)
+        return self.max_diameter
+
+
+
+
+problem no-257
+problem name -binar tree paths
+
+ class Solution:
+    def binaryTreePaths(self, root: Optional[TreeNode]) -> List[str]:
+        def dfs(node, path):
+            if not node.left and not node.right:
+                paths.append(path + str(node.val))
+                return
+            if node.left:
+                dfs(node.left, path + str(node.val) + "->")
+            if node.right:
+                dfs(node.right, path + str(node.val) + "->")
+        
+        paths = []
+        if root:
+            dfs(root, "")
+        return paths
+
+
+
+problem no-236
+problem name -Lowest Common Ancestor of a Binary Tree
+code-
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        if not root or root == p or root == q:
+            return root
+
+        left = self.lowestCommonAncestor(root.left, p, q)
+        right = self.lowestCommonAncestor(root.right, p, q)
+
+        if left and right:
+            return root
+
+        return left or right   
+
+
+
+problem no-979
+problem name -Distribute Coins in Binary Tree
+code-
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    def distributeCoins(self, root):
+        self.ans = 0
+        def dfs(node):
+            if not node: return 0
+            L, R = dfs(node.left), dfs(node.right)
+            self.ans += abs(L) + abs(R)
+            return node.val + L + R - 1
+
+        dfs(root)
+        return self.ans
+
+
+problem no-331
+problem name -Verify Preorder Serialization of a Binary Tree
+
+code-
+class Solution:
+    def isValidSerialization(self, preorder: str) -> bool:
+        s= 1 
+        for node in preorder.split(','):
+            if s == 0:
+                return False  
+            if node == '#':
+                s -= 1  
+            else:
+                s += 1
+        return s==0
+
+
+
+
+problem no-701
+problem name - Insert into a Binary Search Tree
+
+code-
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* insertIntoBST(TreeNode* root, int val) {
+        if(root==nullptr) return new TreeNode(val);
+        TreeNode* curr=root;
+        while(true){
+            if(curr->val<=val){
+                if(curr->right) curr=curr->right;
+                else{
+                    curr->right=new TreeNode(val);
+                    break;
+                }
+            }
+            else{
+                if(curr->left) curr=curr->left;
+                else{
+                    curr->left=new TreeNode(val);
+                    break;
+                }
+            }
+        }
+        return root;
+    }
+};
+
+
+
+
+
+
+problem no-98
+problem name -Validate Binary Search Tree
+code-
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    void isvalid (TreeNode* root, long long l, long long r, bool &ok){
+        if (root==NULL||ok==false){return;}
+        if (root->val>l && root->val<r){
+            isvalid(root->left,l,root->val,ok);
+            isvalid(root->right,root->val,r,ok);
+        }
+        else {ok=false;}
+    }
+    bool isValidBST(TreeNode* root) {
+        bool ok=true;
+        isvalid(root,LLONG_MIN,LLONG_MAX,ok);
+        return ok;
+    }
+};
+
+
+
+
+
+
+problem no-938
+problem name -Range Sum of BST
+code- 
+
+class Solution:
+    def rangeSumBST(self, root: Optional[TreeNode], low: int, high: int) -> int:
+        def dfs(node):
+            if not node:
+                return 0
+            
+            current_val = 0
+            if low <= node.val <= high:
+                current_val = node.val
+            
+            left_sum = dfs(node.left)
+            right_sum = dfs(node.right)
+            
+            return current_val + left_sum + right_sum
+        
+        return dfs(root)
+
+
+
+
+
+problem no-199
+problem name -Binary Tree Right Side View
+code-
+
+from collections import deque
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+        view = []
+        q = deque([(root, 0)])
+        while q:
+            node, level = q.popleft()
+            if not node:
+                continue
+
+            if node.left:
+                q.append((node.left, level+1))
+            if node.right:
+                q.append((node.right, level+1))
+
+            if level > len(view) - 1:
+                view.append(node.val)
+            else:
+                view[level] = node.val
+        return view
