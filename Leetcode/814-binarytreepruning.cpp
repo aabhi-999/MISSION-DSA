@@ -25,7 +25,7 @@ public:
     }
     TreeNode* pruneTree(TreeNode* root) {
         if (solve(root)) {
-            return NULL;
+            return NULL:
         }
         return root;
     }
