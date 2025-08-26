@@ -23,5 +23,8 @@ class Solution:
             return 1 + max(lh, rh)
         height(root)
         return self.balanced
+
+
+# the code is completed 
         
         
