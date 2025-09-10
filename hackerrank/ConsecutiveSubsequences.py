@@ -12,3 +12,5 @@ for _ in range(int(input())):
         else:
             dict1[t]=1
     print(res)
+
+# this is hacker rank question
