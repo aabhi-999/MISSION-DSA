@@ -10,7 +10,7 @@
 #         self.val = val
 #         self.left = left  
 #         self.right = right   
-class Solution:    
+class Solution:     
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
         self.balanced = True
         def height(root):
