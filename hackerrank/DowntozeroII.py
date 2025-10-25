@@ -8,7 +8,7 @@ def map(M):
     m = [M] * (M+1)
     m[0:3] = [0,1,2] 
     for i in range(2, M):
-        m[i+1] = min(m[i+1], 1 + m[i])
+        m[i+1] = min(m[i+1], 1 + m[i]) 
         for j in range(2, i+1):
             if i * j > M: break
             m[i * j] = min(m[i * j], 1 + m[i])
