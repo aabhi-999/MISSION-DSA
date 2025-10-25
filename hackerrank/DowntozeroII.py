@@ -6,7 +6,7 @@ import sys
 
 def map(M):
     m = [M] * (M+1)
-    m[0:3] = [0,1,2]
+    m[0:3] = [0,1,2] 
     for i in range(2, M):
         m[i+1] = min(m[i+1], 1 + m[i])
         for j in range(2, i+1):
