@@ -4,7 +4,7 @@ import random
 import re
 import sys
 
-def map(M):
+def map(M): 
     m = [M] * (M+1)
     m[0:3] = [0,1,2] 
     for i in range(2, M):
