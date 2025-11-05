@@ -6,7 +6,7 @@ for _ in range(int(input())):
     for i in range(len(list1)):
         sum1+=list1[i]
         t=sum1%k
-        if t in dict1:
+        if t in dict1: 
             res+=dict1[t]
             dict1[t]+=1
         else:
