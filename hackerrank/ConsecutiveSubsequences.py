@@ -5,7 +5,7 @@ for _ in range(int(input())):
     sum1,res=0,0
     for i in range(len(list1)):
         sum1+=list1[i]  
-        t=sum1%k
+        t=sum1%k 
         if t in dict1: 
             res+=dict1[t]
             dict1[t]+=1
