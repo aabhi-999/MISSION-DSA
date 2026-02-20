@@ -18,7 +18,7 @@ class Solution:
                 return 0
             lh = height(root.left)
             rh = height(root.right)
-            if abs(lh - rh) > 1:
+            if abs(lh - rh) > 1: 
                 self.balanced = False
             return 1 + max(lh, rh)
         height(root)
