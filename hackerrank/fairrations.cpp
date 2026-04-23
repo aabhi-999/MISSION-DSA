@@ -21,7 +21,7 @@ string fairRations(vector<int> B) {
             res+=2;
         }
     }
-    return B[B.size() - 1] % 2 == 0 ? to_string(res) : "NO";
+    return B[B.size() - 2] % 2 == 0 ? to_string(res) : "NO";
 }
 int main()
 {
