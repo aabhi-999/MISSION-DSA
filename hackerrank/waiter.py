@@ -6,14 +6,6 @@ import random
 import re
 import sys
 
-#
-# Complete the 'waiter' function below.
-#
-# The function is expected to return an INTEGER_ARRAY.
-# The function accepts following parameters:
-#  1. INTEGER_ARRAY number
-#  2. INTEGER q
-#
 
 def is_prime(num):
     if num < 2:
